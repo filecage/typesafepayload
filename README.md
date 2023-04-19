@@ -8,6 +8,12 @@ retrieved from the given payload, an exception is thrown. This is to keep
 the type-safe promise: accessing a value with an expected type will always
 return that value in the expected type _or_ throw an exception.
 
+## Installation
+via composer
+```shell
+$ composer require typesafepayload/typesafepayload
+```
+
 ## Usage
 ### Accessing Data
 #### Example
@@ -56,7 +62,7 @@ $z = $payload->property('coordinates')->index(2)->asInteger(); // throws because
 ### Modifying The Data
 - `::fillEmpty(mixed $value)` fills the current payload with `$value` if it's empty
 
-### Exception Management
+## Exception Management
 By default, an exception of type [`BadPayloadException`](src/BadPayloadException.php) is thrown.
 This behaviour can be controlled by passing a [`ThrowableFactory`](src/ThrowableFactory.php)
 in order to use userland exception types instead. This is useful to avoid having to catch library
@@ -73,8 +79,9 @@ $throwableFactory = new class implements \TypesafePayload\TypesafePayload\Throwa
 
 $payload = new TypesafePayload\TypesafePayload\TypesafePayload("my arbitrary payload", $throwableFactory);
 ```
-> ⚠️ Don't throw from the `ThrowableFactory` as this will only clutter the call stack.
+> ⚠️ Don't throw from the `ThrowableFactory` as this will clutters the stack trace
 
+### Payload Variable Path
 The `$payloadVariable` and `$payloadVariableSubPath` contain the property and/or index path that was used
 to access the current payload where `string` means property access and `int` means index access.
 
