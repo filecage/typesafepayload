@@ -57,6 +57,13 @@ class TypesafePayloadTest extends TestCase {
         $this->assertSame('not empty', $payload->property('empty')->fillEmpty('not empty')->asString());
     }
 
+    function testExpectsStringableToBeOkay () {
+        $stringable = new class implements Stringable {function __toString (): string { return 'hello world'; }};
+        $payload = new TypesafePayload($stringable);;
+
+        $this->assertSame('hello world', $payload->asString());
+    }
+
     function testExpectsIteratorToThrowForNonIterable () {
         $payload = new TypesafePayload(null);
         $this->expectException(BadPayloadException::class);

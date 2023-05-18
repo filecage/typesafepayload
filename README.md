@@ -37,6 +37,9 @@ if they technically could (e.g. from integer to string). The purpose of this
 is to ensure a safe protocol between two APIs. If your application allows for
 APIs where integers and strings are interchangeable, then this is not for you.
 
+However, there is one exception: if the given payload is an object implementing
+the [`Stringable`](https://php.net/Stringable) interface, this value is accepted.
+
 ### Navigating The Structure
 #### Example: Object / Map access
 ```php

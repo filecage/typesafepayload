@@ -76,11 +76,11 @@ final class TypesafePayload {
      * @throws Throwable
      */
     function asString () : string {
-        if (!is_string($this->payloadData)) {
+        if (!is_string($this->payloadData) && !$this->payloadData instanceof \Stringable) {
             throw $this->createThrowable('string');
         }
 
-        return $this->payloadData;
+        return (string) $this->payloadData;
     }
 
     /**
