@@ -82,7 +82,7 @@ $throwableFactory = new class implements \TypesafePayload\TypesafePayload\Throwa
 
 $payload = new TypesafePayload\TypesafePayload\TypesafePayload("my arbitrary payload", $throwableFactory);
 ```
-> ⚠️ Don't throw from the `ThrowableFactory` as this will clutters the stack trace
+> ⚠️ Don't throw from the `ThrowableFactory` as this will clutter the stack trace
 
 ### Payload Variable Path
 The `$payloadVariable` and `$payloadVariableSubPath` contain the property and/or index path that was used
