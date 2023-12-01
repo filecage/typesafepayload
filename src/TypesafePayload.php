@@ -133,6 +133,20 @@ final class TypesafePayload {
         return array_map(fn(self $payload) => $payload->asBoolean(), iterator_to_array($this->iterate()));
     }
 
+    /**
+     * Returns the actual data currently held by the payload, if not empty
+     *
+     * @return mixed
+     * @throws Throwable
+     */
+    function asUnsafeMixed () : mixed {
+        if ($this->payloadData instanceof EmptyPayload) {
+            throw $this->createThrowable('(non-empty)');
+        }
+
+        return $this->payloadData;
+    }
+
     private function createThrowable (string $expectedType) : Throwable {
         $actualType = $this->payloadData instanceof EmptyPayload ? '(empty)' : gettype($this->payloadData);
         if ($this->throwableFactory) {
