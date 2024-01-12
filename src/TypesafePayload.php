@@ -138,14 +138,14 @@ final class TypesafePayload {
 
     /**
      * @template T of object
-     * @param class-string<T> $className
+     * @param class-string<T> $classOrInterfaceName
      *
      * @return T
      * @throws Throwable
      */
-    function asInstanceOf (string $className) : object {
-        if (!is_object($this->payloadData) || !is_a($this->payloadData, $className)) {
-            throw $this->createThrowable('instanceof ' . $className);
+    function asInstanceOf (string $classOrInterfaceName) : object {
+        if (!is_object($this->payloadData) || !is_a($this->payloadData, $classOrInterfaceName)) {
+            throw $this->createThrowable('instanceof ' . $classOrInterfaceName);
         }
 
         return $this->payloadData;

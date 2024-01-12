@@ -31,7 +31,7 @@ $value = $payload->asBoolean(); // throws because value is not a boolean
 - `::asStringList()` returns an array of `string` values
 - `::asIntegerList()` returns an array of `integer` values
 - `::asBooleanList()` returns an array of `boolean` values
-- `::asInstanceOf(string $className)` returns an object that is an instance of `$className` 
+- `::asInstanceOf(string $classOrInterfaceName)` returns an object that is an instance of the given class- or interface name 
 
 It's important to note that these methods do **not** cast any types, even
 if they technically could (e.g. from integer to string). The purpose of this 
