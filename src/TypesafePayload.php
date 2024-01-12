@@ -137,6 +137,21 @@ final class TypesafePayload {
     }
 
     /**
+     * @template T of object
+     * @param class-string<T> $className
+     *
+     * @return T
+     * @throws Throwable
+     */
+    function asInstanceOf (string $className) : object {
+        if (!is_object($this->payloadData) || !is_a($this->payloadData, $className)) {
+            throw $this->createThrowable('instanceof ' . $className);
+        }
+
+        return $this->payloadData;
+    }
+
+    /**
      * Returns the actual data currently held by the payload, if not empty
      *
      * @return mixed
@@ -151,7 +166,7 @@ final class TypesafePayload {
     }
 
     private function createThrowable (string $expectedType) : Throwable {
-        $actualType = $this->payloadData instanceof EmptyPayload ? '(empty)' : gettype($this->payloadData);
+        $actualType = is_object($this->payloadData) ? ($this->payloadData instanceof EmptyPayload ? '(empty)' : 'instanceof ' . get_class($this->payloadData)) : gettype($this->payloadData);
         if ($this->throwableFactory) {
             return $this->throwableFactory->createThrowable($expectedType, $actualType, ...$this->variablePath);
         }

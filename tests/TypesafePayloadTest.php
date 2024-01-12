@@ -4,6 +4,9 @@
 use PHPUnit\Framework\TestCase;
 use TypesafePayload\TypesafePayload\BadPayloadException;
 use TypesafePayload\TypesafePayload\TypesafePayload;
+use TypesafePayload\TypesafePayloadTest\DifferentMockClass;
+use TypesafePayload\TypesafePayloadTest\ExtendedMockClass;
+use TypesafePayload\TypesafePayloadTest\MockClass;
 
 class TypesafePayloadTest extends TestCase {
 
@@ -98,6 +101,20 @@ class TypesafePayloadTest extends TestCase {
     function testExpectsSameInstanceIfPayloadIsNotEmpty () {
         $payload = new TypesafePayload('not empty');
         $this->assertSame($payload, $payload->fillEmpty('foobar'));
+    }
+
+    function testExpectsInstanceOf () {
+        $payload = new TypesafePayload((object) ['parent' => new MockClass(), 'child' => new ExtendedMockClass()]);
+        $this->assertInstanceOf(MockClass::class, $payload->property('parent')->asInstanceOf(MockClass::class));
+        $this->assertInstanceOf(ExtendedMockClass::class, $payload->property('child')->asInstanceOf(MockClass::class));
+    }
+
+    function testExpectsInstanceOfToThrowForDifferentClass () {
+        $payload = new TypesafePayload(new DifferentMockClass());
+        $this->expectException(BadPayloadException::class);
+        $this->expectExceptionMessage('expected `instanceof TypesafePayload\TypesafePayloadTest\MockClass` but got `instanceof TypesafePayload\TypesafePayloadTest\DifferentMockClass` instead');
+
+        $this->assertInstanceOf(MockClass::class, $payload->asInstanceOf(MockClass::class));
     }
 
 }
