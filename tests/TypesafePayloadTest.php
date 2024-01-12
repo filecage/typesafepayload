@@ -95,7 +95,7 @@ class TypesafePayloadTest extends TestCase {
         $payload->property('foo')->asString();
     }
 
-    function testExpectsSameInstaneIfPayloadIsNotEmpty () {
+    function testExpectsSameInstanceIfPayloadIsNotEmpty () {
         $payload = new TypesafePayload('not empty');
         $this->assertSame($payload, $payload->fillEmpty('foobar'));
     }

@@ -2,6 +2,9 @@
 
 namespace TypesafePayload\TypesafePayload;
 
+use ArrayAccess;
+use Generator;
+use Stringable;
 use Throwable;
 
 final class TypesafePayload {
@@ -29,7 +32,7 @@ final class TypesafePayload {
      * @throws Throwable
      */
     function index (int $index) : self {
-        if (!is_array($this->payloadData) && !($this->payloadData instanceof \ArrayAccess)) {
+        if (!is_array($this->payloadData) && !($this->payloadData instanceof ArrayAccess)) {
             throw $this->createThrowable('array');
         }
 
@@ -41,7 +44,7 @@ final class TypesafePayload {
     }
 
     /**
-     * @return \Generator<TypesafePayload>
+     * @return Generator<TypesafePayload>
      * @throws Throwable
      */
     function iterate () : iterable {
@@ -80,7 +83,7 @@ final class TypesafePayload {
      * @throws Throwable
      */
     function asString () : string {
-        if (!is_string($this->payloadData) && !$this->payloadData instanceof \Stringable) {
+        if (!is_string($this->payloadData) && !$this->payloadData instanceof Stringable) {
             throw $this->createThrowable('string');
         }
 
