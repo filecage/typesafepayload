@@ -58,8 +58,9 @@ class TypesafePayloadTest extends TestCase {
     }
 
     function testExpectsEmptyValueToBeRecgnisedAsEmpty () {
-        $payload = new TypesafePayload(new \stdClass());
+        $payload = new TypesafePayload((object) ['empty' => null, 'notEmpty' => true]);
         $this->assertTrue($payload->property('empty')->isEmpty());
+        $this->assertTrue($payload->property('emptier')->isEmpty());
     }
 
     function testExpectsStringableToBeOkay () {

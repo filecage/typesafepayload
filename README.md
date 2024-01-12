@@ -60,7 +60,7 @@ $z = $payload->property('coordinates')->index(2)->asInteger(); // throws because
 - `::property(string $key)` returns a payload walker for the values of the sub-property `$key`
 - `::index(int $index)` returns a payload walker for the values of the index `$index`
 - `::iterate()` returns an iterator for each value of the current payload
-- `::isEmpty()` returns `true` if the current payload is empty
+- `::isEmpty()` returns `true` if the current payload is empty (empty meaning `null` or no value at all)
 
 ### Modifying The Data
 - `::fillEmpty(mixed $value)` fills the current payload with `$value` if it's empty
