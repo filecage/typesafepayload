@@ -66,6 +66,11 @@ class TypesafePayloadTest extends TestCase {
         $this->assertTrue($payload->property('emptier')->isEmpty());
     }
 
+    function testExpectyEmptyValueToBeFilledWithInnerPayloadData () {
+        $payload = new TypesafePayload(new stdClass());
+        $this->assertSame('not empty', $payload->property('empty')->fillEmpty(new TypesafePayload('not empty'))->asString());
+    }
+
     function testExpectsStringableToBeOkay () {
         $stringable = new class implements Stringable {function __toString (): string { return 'hello world'; }};
         $payload = new TypesafePayload($stringable);;

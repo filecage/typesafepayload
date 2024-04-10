@@ -67,7 +67,7 @@ final class TypesafePayload {
     function fillEmpty (mixed $payloadData) : self {
         if ($this->isEmpty()) {
             $clone = clone $this;
-            $clone->payloadData = $payloadData;
+            $clone->payloadData = $payloadData instanceof self ? $payloadData->payloadData : $payloadData;
 
             return $clone;
         }
