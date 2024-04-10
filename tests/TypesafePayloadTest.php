@@ -56,11 +56,11 @@ class TypesafePayloadTest extends TestCase {
     }
 
     function testExpectsEmptyValueToBeFilled () {
-        $payload = new TypesafePayload(new \stdClass());
+        $payload = new TypesafePayload(new stdClass());
         $this->assertSame('not empty', $payload->property('empty')->fillEmpty('not empty')->asString());
     }
 
-    function testExpectsEmptyValueToBeRecgnisedAsEmpty () {
+    function testExpectsEmptyValueToBeRecognisedAsEmpty () {
         $payload = new TypesafePayload((object) ['empty' => null, 'notEmpty' => true]);
         $this->assertTrue($payload->property('empty')->isEmpty());
         $this->assertTrue($payload->property('emptier')->isEmpty());
@@ -91,7 +91,7 @@ class TypesafePayloadTest extends TestCase {
     }
 
     function testExpectsWalkerToThrowForUndefinedProperty () {
-        $payload = new TypesafePayload(new \stdClass());
+        $payload = new TypesafePayload(new stdClass());
         $this->expectException(BadPayloadException::class);
         $this->expectExceptionMessage('$foo, expected `string` but got `(empty)` instead');
 
