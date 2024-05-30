@@ -42,6 +42,11 @@ class TypesafePayloadTest extends TestCase {
         $this->assertTrue($payload->property('object')->property('true')->asBoolean());
         $this->assertFalse($payload->property('object')->property('false')->asBoolean());
 
+        $this->assertSame('hello world', $payload->property('object')->property('string')->asStringOrNull());
+        $this->assertSame(42, $payload->property('object')->property('integer')->asIntegerOrNull());
+        $this->assertTrue($payload->property('object')->property('true')->asBooleanOrNull());
+        $this->assertFalse($payload->property('object')->property('false')->asBooleanOrNull());
+
         $this->assertSame(['foo', 'bar'], $payload->property('stringList')->asStringList());
         $this->assertSame([4, 2], $payload->property('integerList')->asIntegerList());
         $this->assertSame([true, false], $payload->property('booleanList')->asBooleanList());
@@ -108,10 +113,30 @@ class TypesafePayloadTest extends TestCase {
         $this->assertSame($payload, $payload->fillEmpty('foobar'));
     }
 
+    function testExpectsNullValuesForEmptyPropertyWhenUsingNullableAccessors () {
+        $payload = (new TypesafePayload(new stdClass()))->property('does-not-exist');
+
+        $this->assertNull($payload->asBooleanOrNull());
+        $this->assertNull($payload->asStringOrNull());
+        $this->assertNull($payload->asIntegerOrNull());
+        $this->assertNull($payload->asInstanceOfOrNull(MockClass::class));
+    }
+
+    function testExpectsNullValuesForNullPayloadWhenUsingNullableAccessors () {
+        $payload = new TypesafePayload(null);
+
+        $this->assertNull($payload->asBooleanOrNull());
+        $this->assertNull($payload->asStringOrNull());
+        $this->assertNull($payload->asIntegerOrNull());
+        $this->assertNull($payload->asInstanceOfOrNull(MockClass::class));
+    }
+
     function testExpectsInstanceOf () {
         $payload = new TypesafePayload((object) ['parent' => new MockClass(), 'child' => new ExtendedMockClass()]);
         $this->assertInstanceOf(MockClass::class, $payload->property('parent')->asInstanceOf(MockClass::class));
+        $this->assertInstanceOf(MockClass::class, $payload->property('parent')->asInstanceOfOrNull(MockClass::class));
         $this->assertInstanceOf(ExtendedMockClass::class, $payload->property('child')->asInstanceOf(MockClass::class));
+        $this->assertInstanceOf(ExtendedMockClass::class, $payload->property('child')->asInstanceOfOrNull(MockClass::class));
     }
 
     function testExpectsInstanceOfToThrowForDifferentClass () {

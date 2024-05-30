@@ -91,6 +91,17 @@ final class TypesafePayload {
     }
 
     /**
+     * @throws Throwable
+     */
+    function asStringOrNull () : ?string {
+        if ($this->isEmpty() || $this->payloadData === null) {
+            return null;
+        }
+
+        return $this->asString();
+    }
+
+    /**
      * @return string[]
      * @throws Throwable
      */
@@ -110,6 +121,17 @@ final class TypesafePayload {
     }
 
     /**
+     * @throws Throwable
+     */
+    function asIntegerOrNull () : ?int {
+        if ($this->isEmpty() || $this->payloadData === null) {
+            return null;
+        }
+
+        return $this->asInteger();
+    }
+
+    /**
      * @return int[]
      * @throws Throwable
      */
@@ -126,6 +148,17 @@ final class TypesafePayload {
         }
 
         return $this->payloadData;
+    }
+
+    /**
+     * @throws Throwable
+     */
+    function asBooleanOrNull () : ?bool {
+        if ($this->isEmpty() || $this->payloadData === null) {
+            return null;
+        }
+
+        return $this->asBoolean();
     }
 
     /**
@@ -149,6 +182,21 @@ final class TypesafePayload {
         }
 
         return $this->payloadData;
+    }
+
+    /**
+     * @template T of object
+     * @param class-string<T> $classOrInterfaceName
+     *
+     * @return T|null
+     * @throws Throwable
+     */
+    function asInstanceOfOrNull (string $classOrInterfaceName) : ?object {
+        if ($this->isEmpty() || $this->payloadData === null) {
+            return null;
+        }
+
+        return $this->asInstanceOf($classOrInterfaceName);
     }
 
     /**

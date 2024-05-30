@@ -28,10 +28,14 @@ $value = $payload->asBoolean(); // throws because value is not a boolean
 - `::asString()` returns payload as `string`
 - `::asInteger()` returns payload as `integer`
 - `::asBoolean()` returns payload as `boolean`
+- `::asStringOrNull()` returns payload as `string` or `null` if empty
+- `::asIntegerOrNull()` returns payload as `integer` or `null` if empty
+- `::asBooleanOrNull()` returns payload as `boolean` or `null` if empty
 - `::asStringList()` returns an array of `string` values
 - `::asIntegerList()` returns an array of `integer` values
 - `::asBooleanList()` returns an array of `boolean` values
 - `::asInstanceOf(string $classOrInterfaceName)` returns an object that is an instance of the given class- or interface name 
+- `::asInstanceOfOrNull(string $classOrInterfaceName)` returns `null` if property is empty, otherwise an instance of the given class or interface 
 
 It's important to note that these methods do **not** cast any types, even
 if they technically could (e.g. from integer to string). The purpose of this 
